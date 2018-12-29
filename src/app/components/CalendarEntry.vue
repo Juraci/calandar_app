@@ -24,8 +24,9 @@ export default {
     }
   },
   methods: {
-    submitEvent(inputEntry) {
-      store.submitEvent(inputEntry);
+    submitEvent(eventDetails) {
+      store.submitEvent(eventDetails);
+      this.inputEntry = '';
     }
   }
 }
