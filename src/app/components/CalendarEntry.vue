@@ -1,9 +1,12 @@
 <template>
   <div id="calendar-entry">
     <div class="calendar-entry-note">
-      <input type="text" placeholder="New Event" v-model="inputEntry" required />
-      <p class="calendar-entry-day">Day of event: <span class="bold">{{ titleOfActiveDay }}</span></p>
-      <a class="button is-primary is-small is-outlined" @click="submitEvent(inputEntry)">Submit</a>
+      <form @submit.prevent="submitEvent(inputEntry)">
+        <input type="text" placeholder="New Event" v-model="inputEntry" required />
+        <p class="calendar-entry-day">Day of event: <span class="bold">{{ titleOfActiveDay }}</span></p>
+        <a class="button is-primary is-small is-outlined" @click="submitEvent(inputEntry)">Submit</a>
+        <p class="error" v-if="error">You must type something first!</p>
+      </form>
     </div>
   </div>
 </template>
@@ -15,7 +18,8 @@ export default {
   name: 'CalendarEntry',
   data() {
     return {
-      inputEntry: ''
+      inputEntry: '',
+      error: false,
     }
   },
   computed: {
@@ -25,8 +29,10 @@ export default {
   },
   methods: {
     submitEvent(eventDetails) {
+      if(eventDetails === '') return this.error = true;
       store.submitEvent(eventDetails);
       this.inputEntry = '';
+      this.error = false;
     }
   }
 }
@@ -70,6 +76,13 @@ export default {
     .submit {
       display: block;
       margin: 0 auto;
+    }
+
+    .error {
+      padding-left: 0.5rem;
+      display: inline-block;
+      color: red;
+      font-size: 10px;
     }
   }
 }
