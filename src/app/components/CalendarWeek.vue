@@ -18,7 +18,7 @@ export default {
   name: 'CalendarWeek',
   data() {
     return {
-      sharedState: store.state
+      sharedState: store.load()
     }
   },
   components: {
